@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.0.21/tesAPI/"
+    private const val BASE_URL = "http://192.168.1.6/tesAPI/"
     // ganti dengan IP server kamu kalau bukan emulator
 
     private var retrofit: Retrofit? = null

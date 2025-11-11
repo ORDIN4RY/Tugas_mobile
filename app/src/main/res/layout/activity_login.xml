@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_rounded"
-                android:hint="Masukkan Email"
+                android:hint="Masukkan Username"
                 android:textColor="@color/primary"
                 android:textColorHint="@color/primary" />
 

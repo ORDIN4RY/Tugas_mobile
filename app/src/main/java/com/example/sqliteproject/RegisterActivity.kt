@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Call
@@ -16,6 +17,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var edtUser: EditText
     private lateinit var edtPass: EditText
     private lateinit var btnRegister: Button
+    private lateinit var btnLogin: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,7 @@ class RegisterActivity : AppCompatActivity() {
         edtUser = findViewById(R.id.username)
         edtPass = findViewById(R.id.password)
         btnRegister = findViewById(R.id.btnRegister)
+        btnLogin = findViewById<TextView>(R.id.keLogin)
 
         btnRegister.setOnClickListener {
             val username = edtUser.text.toString().trim()
@@ -33,47 +36,51 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Isi semua field", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            fun registerUser(username: String, password: String) {
-                val request = RegisterRequest(username, password)
-
-                RetrofitClient.instance.register(request).enqueue(object : Callback<RegisterResponse> {
-                        override fun onResponse(
-                            call: Call<RegisterResponse>,
-                            response: Response<RegisterResponse>
-                        ) {
-                            if (response.isSuccessful && response.body()?.status == "success") {
-                                Toast.makeText(
-                                    this@RegisterActivity,
-                                    "Registrasi sukses!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                startActivity(
-                                    Intent(
-                                        this@RegisterActivity,
-                                        LoginActivity::class.java
-                                    )
-                                )
-                                finish()
-                            } else {
-                                Toast.makeText(
-                                    this@RegisterActivity,
-                                    response.body()?.message ?: "Gagal registrasi",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-
-                        override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                            Toast.makeText(
-                                this@RegisterActivity,
-                                "Error: ${t.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                    })
-            }
+            registerUser(username, password)
         }
+        btnLogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+    }
+
+    fun registerUser(username: String, password: String) {
+        val request = RegisterRequest(username, password)
+
+        RetrofitClient.instance.register(request).enqueue(object : Callback<RegisterResponse> {
+            override fun onResponse(
+                call: Call<RegisterResponse>,
+                response: Response<RegisterResponse>
+            ) {
+                if (response.isSuccessful && response.body()?.status == "success") {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Registrasi sukses!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(
+                        Intent(
+                            this@RegisterActivity,
+                            LoginActivity::class.java
+                        )
+                    )
+                    finish()
+                } else {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        response.body()?.message ?: "Gagal registrasi",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                Toast.makeText(
+                    this@RegisterActivity,
+                    "Error: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
     }
 }
