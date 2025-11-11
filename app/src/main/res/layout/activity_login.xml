@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:paddingTop="30dp"
+    tools:context=".LoginActivity">
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="TODO"
+        android:paddingHorizontal="10dp"
+        android:src="@drawable/back" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:paddingHorizontal="30dp"
+        android:text="Login"
+        android:textColor="@color/primary"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:paddingHorizontal="30dp"
+        android:text="@string/deskLogin"
+        android:textColor="@color/primary"
+        android:textSize="18sp" />
+    <!--        android:textAlignment="center"-->
+
+
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent" -->
+    <!--    >-->
+    <!--        android:paddingVertical="90dp"-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardlogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@android:color/transparent"
+        app:cardElevation="0dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_login_reg"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp">
+
+            <EditText
+                android:id="@+id/inputEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_rounded"
+                android:hint="Masukkan Email"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/primary" />
+
+            <EditText
+                android:id="@+id/inputPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/input_rounded"
+                android:hint="Masukkan Password"
+                android:inputType="textPassword"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/primary" />
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Login"
+                android:textColor="@color/background"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/keRegis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:text="Belum punya akun? Register"
+                android:textAlignment="center"
+                android:textColor="@color/maroon" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!--    </androidx.cardview.widget.CardView>-->
+</LinearLayout>
