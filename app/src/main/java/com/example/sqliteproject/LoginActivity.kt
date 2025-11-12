@@ -95,48 +95,84 @@ class LoginActivity : AppCompatActivity() {
 
     fun loginUser(username: String, password: String) {
         val request = LoginRequest(username, password)
+
         RetrofitClient.instance.login(request).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
                 call: Call<LoginResponse>,
                 response: Response<LoginResponse>
             ) {
-                if (response.isSuccessful && response.body()?.status == "success") {
-                    val id = response.body()?.user_id
-                    val username = response.body()?.username
-                    val token = response.body()?.token
-                    if (id != null) {
-                        db.clearUser()
+                val body = response.body()
 
-                        db.saveUser(User(id, username!!, token!!))
-                        Toast.makeText(
-                            this@LoginActivity,
-                            "Login berhasil",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        startActivity(
-                            Intent(
+                if (response.isSuccessful && body != null) {
+                    when (body.code) {
+                        200 -> {
+                            // Login sukses
+                            body.user?.let { user ->
+                                db.clearUser()
+                                db.saveUser(user)
+
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Login berhasil",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                                startActivity(
+                                    Intent(this@LoginActivity, DashboardActivity::class.java)
+                                )
+                                finish()
+                            } ?: run {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Data user tidak ditemukan di response",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+
+                        401 -> {
+                            Toast.makeText(
                                 this@LoginActivity,
-                                DashboardActivity::class.java
-                            )
-                        )
-                        finish()
+                                "Username atau password salah",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        400 -> {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Field tidak boleh kosong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        else -> {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Terjadi kesalahan: ${body.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 } else {
-                    Toast.makeText(this@LoginActivity, "Login gagal", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Response tidak valid atau gagal: ${response.code()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-//                Toast.makeText(
-//                    this@LoginActivity,
-//                    t.message,
-//                    Toast.LENGTH_SHORT
-//                ).show()
-                etUsername.setText(t.message)
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Koneksi gagal: ${t.localizedMessage}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
+
 
     private fun goToRegister(){
         animateOut {

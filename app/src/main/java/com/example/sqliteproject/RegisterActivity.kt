@@ -82,23 +82,50 @@ class RegisterActivity : AppCompatActivity() {
                 call: Call<RegisterResponse>,
                 response: Response<RegisterResponse>
             ) {
-                if (response.isSuccessful && response.body()?.status == "success") {
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Registrasi sukses!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    startActivity(
-                        Intent(
-                            this@RegisterActivity,
-                            LoginActivity::class.java
-                        )
-                    )
-                    finish()
+                val body = response.body()
+
+                if (response.isSuccessful && body != null) {
+                    when (body.code) {
+                        200 -> {
+                            // Registrasi berhasil
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                "Registrasi berhasil! Silakan login.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                            finish()
+                        }
+
+                        400 -> {
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                "Field tidak boleh kosong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        409 -> {
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                "Username sudah terdaftar",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        else -> {
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                "Gagal registrasi: ${body.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 } else {
                     Toast.makeText(
                         this@RegisterActivity,
-                        response.body()?.message ?: "Gagal registrasi",
+                        "Response tidak valid atau gagal: ${response.code()}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -107,13 +134,13 @@ class RegisterActivity : AppCompatActivity() {
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                 Toast.makeText(
                     this@RegisterActivity,
-                    "Error: ${t.message}",
+                    "Koneksi gagal: ${t.localizedMessage}",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
         })
     }
+
 
     private fun goToLogin(){
         animateOut {
