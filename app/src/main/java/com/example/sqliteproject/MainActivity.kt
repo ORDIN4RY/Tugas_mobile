@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -39,18 +40,30 @@ class MainActivity : AppCompatActivity() {
         btnLogin = findViewById(R.id.tombolLogin)
         btnRegister = findViewById(R.id.tombolRegister)
 
-        // Aksi tombol Login
         btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+
+            val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,                // Context
+                R.anim.fade_in,      // animasi masuk
+                R.anim.fade_out      // animasi keluar
+            )
+
+            startActivity(intent, options.toBundle())
+            this.finish()
         }
 
-        // Aksi tombol Register
         btnRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-            finish()
+
+            val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,                // Context
+                R.anim.fade_in,      // animasi masuk
+                R.anim.fade_out      // animasi keluar
+            )
+
+            startActivity(intent, options.toBundle())
+            this.finish()
         }
     }
 }

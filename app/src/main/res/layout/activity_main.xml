@@ -25,7 +25,7 @@
             android:layout_marginTop="25dp"
             android:layout_width="236dp"
             android:layout_height="236dp"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/logo" />
 
         <TextView
             android:layout_width="wrap_content"

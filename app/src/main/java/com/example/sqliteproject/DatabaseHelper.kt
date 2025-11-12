@@ -13,7 +13,6 @@ class DatabaseHelper(context: Context) :
         private const val DATABASE_NAME = "user_db"
         private const val DATABASE_VERSION = 1
         private const val TABLE_USER = "user"
-
         private const val KEY_ID = "id"
         private const val KEY_USERNAME = "username"
         private const val KEY_TOKEN = "token"

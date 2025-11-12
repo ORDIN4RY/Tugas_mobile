@@ -5,39 +5,39 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:paddingTop="30dp"
-    tools:context=".LoginActivity">
+    android:background="@color/background"
+    android:paddingTop="30dp">
 
     <ImageButton
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:background="@android:color/transparent"
         android:contentDescription="TODO"
+        android:src="@drawable/back"
         android:paddingHorizontal="10dp"
-        android:src="@drawable/back" />
+        android:background="@android:color/transparent" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:paddingHorizontal="30dp"
+        android:textColor="@color/primary"
         android:text="Login"
-        android:textColor="@color/primary"
+        android:textStyle="bold"
+        android:paddingHorizontal="30dp"
         android:textSize="32sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="50dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:paddingHorizontal="30dp"
-        android:text="@string/deskLogin"
         android:textColor="@color/primary"
-        android:textSize="18sp" />
+        android:text="@string/deskLogin"
+        android:textSize="18sp"
+        android:layout_marginBottom="25dp"
+        android:paddingHorizontal="30dp" />
     <!--        android:textAlignment="center"-->
 
 
@@ -50,59 +50,90 @@
         android:id="@+id/cardlogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
         android:backgroundTint="@android:color/transparent"
+        android:translationY="200dp"
+        android:alpha="0"
         app:cardElevation="0dp">
 
 
+
         <LinearLayout
+            android:paddingTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/card_login_reg"
-            android:elevation="3dp"
-            android:gravity="center"
             android:orientation="vertical"
-            android:paddingHorizontal="30dp">
+            android:background="@drawable/card_login_reg"
+            android:paddingHorizontal="30dp"
+            android:elevation="3dp">
 
             <EditText
                 android:id="@+id/inputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/input_rounded"
-                android:hint="Masukkan Username"
+                android:hint="Masukkan Email"
                 android:textColor="@color/primary"
+                android:background="@drawable/input_rounded"
                 android:textColorHint="@color/primary" />
 
-            <EditText
-                android:id="@+id/inputPass"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/input_rounded"
-                android:hint="Masukkan Password"
-                android:inputType="textPassword"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/primary" />
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/inputPass"
+                    android:textColorHint="@color/primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Masukkan Password"
+                    android:textColor="@color/primary"
+                    android:background="@drawable/input_rounded"
+                    android:inputType="textPassword"
+                    android:layout_centerVertical="true" />
+
+                <ImageView
+                    android:id="@+id/btn_show"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/eye_show"
+                    android:layout_centerVertical="true"
+                    android:layout_alignEnd="@+id/inputPass"
+                    android:layout_marginEnd="18dp"/>
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/btnLogin"
+                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Login"
                 android:textColor="@color/background"
+                android:text="Login"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/keRegis"
+                android:layout_marginTop="5sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
+                android:textColor="@color/maroon"
                 android:text="Belum punya akun? Register"
-                android:textAlignment="center"
-                android:textColor="@color/maroon" />
+                android:textAlignment="center" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <!--    </androidx.cardview.widget.CardView>-->
+    <FrameLayout
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+    </FrameLayout>
 </LinearLayout>
+
